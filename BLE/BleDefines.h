@@ -13,8 +13,8 @@ NSInteger major = 11;
 NSInteger minor = 22;
 NSString *bcrIdentifier = @"com.streamind.bcrIdentifier";
 
-NSString *bleServiceUUID = @"9a1544ca-9b93-4e20-8adc-5c96bae71c1e"; //@"6BCF"; //@"FFEE";
-NSString *bleCharacteristicUUID = @"bdfc68c7-2a73-4b4b-856d-5c67616ce72a"; //@"50aef763-a606-4caa-b2d9-1a99c99cc54b"; //@"6BD0"; //@"FF01";
+NSString *bleServiceUUID = @"9a1544ca-9b93-4e20-8adc-5c96bae71c1a"; //@"6BCF"; //@"FFEE";
+NSString *bleCharacteristicUUID = @"bdfc68c7-2a73-4b4b-856d-5c67616ce72e"; //@"50aef763-a606-4caa-b2d9-1a99c99cc54b"; //@"6BD0"; //@"FF01";
 
 NSString *bleServiceUUID2 = @"FFE2";
 NSString *bleCharacteristicUUID2 = @"FF02";

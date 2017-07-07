@@ -24,6 +24,7 @@ NSString *end = @"com.ming.e";
 @property (weak, nonatomic) id <BBleHelperDelegate> delegate;
 
 @property (strong, nonatomic) CBPeripheral *peripheral;
+@property (strong, nonatomic) CBService *service;
 @property (strong, nonatomic) CBCharacteristic *characteristic;
 
 @property (strong, nonatomic) NSMutableData *data;
@@ -156,10 +157,15 @@ NSString *end = @"com.ming.e";
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error {
     NSLog(@"did discover service: %ld", peripheral.services.count);
-    [peripheral.services enumerateObjectsUsingBlock:^(CBService * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:bleCharacteristicUUID]] forService:obj];
-        [self.delegate changeMsg:[NSString stringWithFormat:@"已发现Service: %@", obj.UUID.UUIDString]];
-    }];
+    if (peripheral.services.count > 0) {
+        self.service = peripheral.services[0];
+        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:bleCharacteristicUUID]] forService:self.service];
+        [self.delegate changeMsg:[NSString stringWithFormat:@"已发现Service: %@", self.service]];
+    }
+//    [peripheral.services enumerateObjectsUsingBlock:^(CBService * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:bleCharacteristicUUID]] forService:obj];
+//        [self.delegate changeMsg:[NSString stringWithFormat:@"已发现Service: %@", obj.UUID.UUIDString]];
+//    }];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error{
@@ -187,6 +193,7 @@ NSString *end = @"com.ming.e";
     if (peripheral == self.peripheral) {
         self.peripheral = nil;
         self.characteristic = nil;
+        self.service = nil;
     }
 }
 

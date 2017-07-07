@@ -9,10 +9,12 @@
 #import "BViewController.h"
 #import "BBleHelper.h"
 
-@interface BViewController () <BBleHelperDelegate>
+@interface BViewController () <BBleHelperDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *msgView;
 @property (strong, nonatomic) BBleHelper *helper;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTf;
+@property (weak, nonatomic) IBOutlet UITextField *contentTf;
 
 @end
 
@@ -33,13 +35,13 @@
 }
 
 - (IBAction)send:(id)sender {
-    NSArray *jsObjs = @[
-                        @{@"phone": @"18516601886", @"content": @"12345678", @"action": @"sendMsg"}
-                        ];
     
-    for (NSDictionary *obj in jsObjs) {
-        [self.helper enqueue:obj];
+    if (![self checkData]) {
+        return;
     }
+    NSDictionary *jsObj = @{@"phone": self.phoneTf.text, @"content": self.contentTf.text, @"action": @"sendMsg"};
+    
+    [self.helper enqueue:jsObj];
 }
 
 - (IBAction)openHot:(id)sender {
@@ -52,10 +54,34 @@
     [self.helper enqueue:close];
 }
 
+- (BOOL)checkData {
+    if (self.phoneTf.text.length == 0) {
+        [self changeMsg:@"请输入对方手机号码"];
+        return NO;
+    } else if (self.contentTf.text.length == 0) {
+        [self changeMsg:@"请输入短信内容"];
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark - CBleHelperDelegate method
 - (void)changeMsg:(NSString *)msg {
     self.msgView.text = [NSString stringWithFormat:@"%@\n-----%@", self.msgView.text, msg];
     [self.msgView scrollRangeToVisible:NSMakeRange(self.msgView.text.length, 1)];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self clearKeyboard];
+    return YES;
+}
+
+- (void)clearKeyboard {
+    if ([self.phoneTf isFirstResponder]) {
+        [self.phoneTf resignFirstResponder];
+    } else if ([self.contentTf isFirstResponder]) {
+        [self.contentTf resignFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
