@@ -34,7 +34,7 @@
 
 - (IBAction)send:(id)sender {
     NSArray *jsObjs = @[
-                        @{@"phone": @"18516601886", @"content": @"12345678"}
+                        @{@"phone": @"13646288987", @"content": @"12345678"}
                         ];
     
     for (NSDictionary *obj in jsObjs) {
