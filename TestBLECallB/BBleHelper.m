@@ -98,6 +98,7 @@ NSString *end = @"com.ming.e";
         [self.sendQueue addObject:startData];
         [self.sendQueue addObject:lengthData];
         [self.sendQueue addObject:jsData];
+        [self sendNext];
     }
 }
 
@@ -157,6 +158,7 @@ NSString *end = @"com.ming.e";
     NSLog(@"did discover service: %ld", peripheral.services.count);
     [peripheral.services enumerateObjectsUsingBlock:^(CBService * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:bleCharacteristicUUID]] forService:obj];
+        [self.delegate changeMsg:[NSString stringWithFormat:@"已发现Service: %@", obj.UUID.UUIDString]];
     }];
 }
 
@@ -167,7 +169,7 @@ NSString *end = @"com.ming.e";
         [peripheral setNotifyValue:YES forCharacteristic:characteristic];
 //        [peripheral discoverDescriptorsForCharacteristic:characteristic];
         self.characteristic = characteristic;
-        [self.delegate changeMsg:@"正在拨号..."];
+        [self.delegate changeMsg:@"已发现Characteristic"];
     }
 }
 
@@ -219,16 +221,16 @@ NSString *end = @"com.ming.e";
     
     NSLog(@"receive new: %ld", characteristic.value.length);
     if ([tryParse isEqualToString:start]) {
-        if (self.data.length >= self.dataLength) {
-            NSString *dataStr = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
-            if (!dataStr) {
-                NSLog(@"receive new, discard old");
-            }
+        if (self.data.length < self.dataLength) {
+            NSLog(@"Pack lose, length: %ld, receive: %ld", self.dataLength, self.data.length);
+            [self.delegate changeMsg:[NSString stringWithFormat:@"Pack lose, length: %ld, receive: %ld", self.dataLength, self.data.length]];
         }
         
         self.receiveStart = YES;
         self.dataLength = -1;
         self.data = nil;
+        
+        [self.delegate changeMsg:@"Receive new: "];
     } else if (self.receiveStart) {
         NSInteger length = [tryParse integerValue];
         self.dataLength = length;
@@ -239,12 +241,18 @@ NSString *end = @"com.ming.e";
     } else {
         if (self.data.length < self.dataLength) {
             [self.data appendData:characteristic.value];
-            if (self.data.length >= self.dataLength) {
-                NSString *result = [[NSString alloc] initWithData:[self.data subdataWithRange:NSMakeRange(0, self.dataLength)] encoding:NSUTF8StringEncoding];
-                NSLog(@"did receive: \n%@", result);
-            }
         } else {
-            NSLog(@"Receive to much data, more than data length: %ld", self.dataLength);
+            NSLog(@"Receive to much data, length: %ld, more than data length: %ld", self.data.length, self.dataLength);
+        }
+        if (self.data.length >= self.dataLength) {
+            NSString *result = [[NSString alloc] initWithData:[self.data subdataWithRange:NSMakeRange(0, self.dataLength)] encoding:NSUTF8StringEncoding];
+            if (result) {
+                NSLog(@"did receive: \n%@", result);
+                [self.delegate changeMsg:result];
+            } else {
+                NSLog(@"Can not parse data");
+                [self.delegate changeMsg:@"Can not parse data"];
+            }
         }
     }
     

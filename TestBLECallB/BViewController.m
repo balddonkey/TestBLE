@@ -34,13 +34,22 @@
 
 - (IBAction)send:(id)sender {
     NSArray *jsObjs = @[
-                        @{@"phone": @"13646288987", @"content": @"12345678"}
+                        @{@"phone": @"18516601886", @"content": @"12345678", @"action": @"sendMsg"}
                         ];
     
     for (NSDictionary *obj in jsObjs) {
         [self.helper enqueue:obj];
     }
-    [_helper sendNext];
+}
+
+- (IBAction)openHot:(id)sender {
+    NSDictionary *open = @{@"action": @"openHot"};
+    [self.helper enqueue:open];
+}
+
+- (IBAction)closeHot:(id)sender {
+    NSDictionary *close = @{@"action": @"closeHot"};
+    [self.helper enqueue:close];
 }
 
 #pragma mark - CBleHelperDelegate method
