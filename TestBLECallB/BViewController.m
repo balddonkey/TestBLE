@@ -54,6 +54,10 @@
     [self.helper enqueue:close];
 }
 
+- (IBAction)clear {
+    self.msgView.text = nil;
+}
+
 - (BOOL)checkData {
     if (self.phoneTf.text.length == 0) {
         [self changeMsg:@"请输入对方手机号码"];

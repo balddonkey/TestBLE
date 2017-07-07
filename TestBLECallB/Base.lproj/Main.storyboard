@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,7 +30,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVU-jV-U2U">
-                                <rect key="frame" x="157" y="40" width="60" height="40"/>
+                                <rect key="frame" x="64" y="40" width="60" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="DL0-bU-fi7"/>
                                     <constraint firstAttribute="width" constant="60" id="Oit-Y6-Udc"/>
@@ -78,6 +79,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="c2a-zt-yEj"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyh-1H-y1t">
+                                <rect key="frame" x="263.5" y="45" width="36" height="30"/>
+                                <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="T6G-ia-EDu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -89,8 +97,9 @@
                             <constraint firstItem="tcd-iC-cnY" firstAttribute="top" secondItem="xGW-XH-WiG" secondAttribute="bottom" constant="20" id="8Xa-0M-bdz"/>
                             <constraint firstItem="xGW-XH-WiG" firstAttribute="top" secondItem="8J2-qy-76u" secondAttribute="bottom" constant="20" id="AYe-bp-Gqn"/>
                             <constraint firstItem="zcc-43-8AJ" firstAttribute="height" secondItem="VLz-BL-SQE" secondAttribute="height" id="EYm-av-xoP"/>
-                            <constraint firstItem="sVU-jV-U2U" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hu1-aI-u12"/>
+                            <constraint firstItem="sVU-jV-U2U" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="0.5" id="Hu1-aI-u12"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VLz-BL-SQE" secondAttribute="bottom" constant="100" id="IOa-nb-6W6"/>
+                            <constraint firstItem="oyh-1H-y1t" firstAttribute="centerY" secondItem="sVU-jV-U2U" secondAttribute="centerY" id="PYq-fB-5gm"/>
                             <constraint firstItem="tcd-iC-cnY" firstAttribute="leading" secondItem="zcc-43-8AJ" secondAttribute="trailing" constant="40" id="Tl9-5O-Kne"/>
                             <constraint firstItem="tcd-iC-cnY" firstAttribute="width" secondItem="VLz-BL-SQE" secondAttribute="width" id="WO2-gW-e9w"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8J2-qy-76u" secondAttribute="trailing" constant="4" id="aaZ-jO-x5G"/>
@@ -100,6 +109,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="DI4-Yv-Kwl" secondAttribute="trailing" constant="4" id="jbV-VG-3Io"/>
                             <constraint firstItem="zcc-43-8AJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kS7-ew-w3m"/>
                             <constraint firstAttribute="trailing" secondItem="xGW-XH-WiG" secondAttribute="trailing" constant="20" id="soh-8Y-EkP"/>
+                            <constraint firstItem="oyh-1H-y1t" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="1.5" id="u6f-JO-O4v"/>
                             <constraint firstItem="xGW-XH-WiG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="wIP-Pt-bfq"/>
                             <constraint firstItem="tcd-iC-cnY" firstAttribute="height" secondItem="VLz-BL-SQE" secondAttribute="height" id="zIP-ko-AgU"/>
                         </constraints>
