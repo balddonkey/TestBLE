@@ -251,7 +251,7 @@ NSString *end = @"com.ming.e";
                 [self.delegate changeMsg:result];
             } else {
                 NSLog(@"Can not parse data");
-                [self.delegate changeMsg:@"Can not parse data"]; 
+                [self.delegate changeMsg:@"Can not parse data"];
             }
         }
     }
